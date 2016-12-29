@@ -10,8 +10,8 @@ import ufscar.cg.frogger.sprites.GameSprite;
 
 public class MenuScreen extends Screen {
 
-    private SpriteCache _spriteCache;
-    private int _spriteCacheIndex;
+    private SpriteCache spriteCache;
+    private int spriteCacheIndex;
     private BitmapFont title;
 
 
@@ -23,35 +23,25 @@ public class MenuScreen extends Screen {
     public void createScreen() {
         title = new BitmapFont();
 
-//        if (elements.size() == 0) {
-//            GameSprite logo = new GameSprite ("logo", _game, _game.screenWidth * 0.5f,  _game.screenHeight * 0.7f);
-//            GameSprite label1 = new GameSprite ("label_how_to", _game, _game.screenWidth * 0.5f,  _game.screenHeight * 0.53f);
-//            GameSprite label2 = new GameSprite ("label_instructions", _game, _game.screenWidth * 0.5f,  _game.screenHeight * 0.2f);
-//            GameSprite label3 = new GameSprite ("label_tap", _game, _game.screenWidth * 0.5f,  _game.screenHeight * 0.02f);
-//            GameSprite control = new GameSprite ("control", _game, _game.screenWidth * 0.5f,  _game.screenHeight * 0.4f);
-//
-//
-//        /*
-//        //OPTION 1: With SpriteBatch
-//        elements.add(logo);
-//        elements.add(label1);
-//        elements.add(label2);
-//        elements.add(label3);
-//        elements.add(control);
-//        */
-//
-//            //OPTION 2: With SpriteCache
-//            _spriteCache = new SpriteCache();
-//            _spriteCache.beginCache();
-//            _spriteCache.add(logo.skin, logo.x, logo.y);
-//            _spriteCache.add(label1.skin, label1.x, label1.y);
-//            _spriteCache.add(label2.skin, label2.x, label2.y);
-//            _spriteCache.add(label3.skin, label3.x, label3.y);
-//            _spriteCache.add(control.skin, control.x, control.y);
-//            _spriteCacheIndex = _spriteCache.endCache();
-//
-//        }
+        if (elements.size() == 0) {
+            GameSprite logo = new GameSprite ("frog", game, game.screenWidth * 0.5f,  game.screenHeight * 0.7f);
 
+
+        /*
+        //OPTION 1: With SpriteBatch
+        elements.add(logo);
+        elements.add(label1);
+        elements.add(label2);
+        elements.add(label3);
+        elements.add(control);
+        */
+
+            //OPTION 2: With SpriteCache
+            spriteCache = new SpriteCache();
+            spriteCache.beginCache();
+            spriteCache.add(logo.skin, logo.x, logo.y);
+            spriteCacheIndex = spriteCache.endCache();
+        }
     }
 
     @Override
@@ -88,13 +78,13 @@ public class MenuScreen extends Screen {
         _game.spriteBatch.end();
         */
 
-//            //OPTION 2: With SpriteCache
-//            gl.glEnable(GL20.GL_BLEND);
-//            gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-//            _spriteCache.setProjectionMatrix(game.camera.combined);
-//            _spriteCache.begin();
-//            _spriteCache.draw(_spriteCacheIndex);
-//            _spriteCache.end();
+            //OPTION 2: With SpriteCache
+            gl.glEnable(GL20.GL_BLEND);
+            gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            spriteCache.setProjectionMatrix(game.camera.combined);
+            spriteCache.begin();
+            spriteCache.draw(spriteCacheIndex);
+            spriteCache.end();
 
 
 
