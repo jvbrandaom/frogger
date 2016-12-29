@@ -1,5 +1,5 @@
 texture.png
-size: 800, 480
+size: 864, 480
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -38,9 +38,23 @@ water
   orig: 32, 32
   offset: 0, 0
   index: -1
-wood
+wood_left
   rotate: false
   xy: 768, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+wood_mid
+  rotate: false
+  xy: 800, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+wood_right
+  rotate: false
+  xy: 832, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
