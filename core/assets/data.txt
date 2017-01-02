@@ -1,61 +1,82 @@
 texture.png
-size: 864, 480
+size: 640, 544
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+alligator
+  rotate: false
+  xy: 128, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 background_640
   rotate: false
-  xy: 0, 0
+  xy: 0, 32
   size: 640, 480
   orig: 640, 480
   offset: 0, 0
   index: 480
-car
+car1
   rotate: false
-  xy: 640, 0
+  xy: 96, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+car2
+  rotate: false
+  xy: 32, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 frog
   rotate: false
-  xy: 672, 0
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+frog_jump
+  rotate: false
+  xy: 64, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 grass
   rotate: false
-  xy: 704, 0
-  size: 32, 32
-  orig: 32, 32
+  xy: 0, 512
+  size: 640, 32
+  orig: 640, 32
   offset: 0, 0
   index: -1
-water
+truck
   rotate: false
-  xy: 736, 0
-  size: 32, 32
-  orig: 32, 32
+  xy: 224, 0
+  size: 64, 32
+  orig: 64, 32
   offset: 0, 0
   index: -1
-wood_left
+wood2
   rotate: false
-  xy: 768, 0
-  size: 32, 32
-  orig: 32, 32
+  xy: 160, 0
+  size: 64, 32
+  orig: 64, 32
   offset: 0, 0
   index: -1
-wood_mid
+wood3
   rotate: false
-  xy: 800, 0
-  size: 32, 32
-  orig: 32, 32
+  xy: 288, 0
+  size: 96, 32
+  orig: 96, 32
   offset: 0, 0
   index: -1
-wood_right
+wood4
   rotate: false
-  xy: 832, 0
-  size: 32, 32
-  orig: 32, 32
+  xy: 384, 0
+  size: 128, 32
+  orig: 128, 32
   offset: 0, 0
   index: -1
