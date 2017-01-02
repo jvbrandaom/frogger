@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import ufscar.cg.frogger.data.GameData;
 import ufscar.cg.frogger.data.ImageCache;
 import ufscar.cg.frogger.screens.Screen;
 
@@ -24,6 +25,7 @@ public class Frogger extends ApplicationAdapter {
 	Texture img;
     public int screenWidth = 0;
     public int screenHeight = 0;
+    public GameData gameData;
 	
 	@Override
 	public void create () {

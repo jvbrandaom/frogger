@@ -48,8 +48,6 @@ public class GameSprite {
         this.skin = texture;
         width = skin.getRegionWidth();
         height = skin.getRegionHeight();
-        x = x - skin.getRegionWidth() * 0.5f;
-        y = y - skin.getRegionHeight() * 0.5f;
     }
 
     public float right () {
@@ -69,7 +67,7 @@ public class GameSprite {
     }
 
     public Rectangle bounds () {
-        return new Rectangle(x + width * 0.2f, y + height * 0.2f, width * 0.8f, height * 0.8f);
+        return new Rectangle(x, y, width, height);
     }
 
     public void reset () {}

@@ -3,17 +3,25 @@ package ufscar.cg.frogger.screens;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteCache;
+import com.badlogic.gdx.utils.Array;
 import ufscar.cg.frogger.Frogger;
+import ufscar.cg.frogger.data.ImageCache;
 import ufscar.cg.frogger.sprites.GameSprite;
+
+import java.util.ArrayList;
 
 public class MenuScreen extends Screen {
 
     private SpriteCache spriteCache;
     private int spriteCacheIndex;
     private BitmapFont title;
-
+    private Animation<Sprite> animation;
+    private float elapsedTime = 0f;
+    int i = 0;
 
     public MenuScreen (Frogger game) {
         super(game);
@@ -24,8 +32,14 @@ public class MenuScreen extends Screen {
         title = new BitmapFont();
 
         if (elements.size() == 0) {
-            GameSprite logo = new GameSprite ("frog", game, game.screenWidth * 0.5f,  game.screenHeight * 0.7f);
+            Array<Sprite> sprites = new Array<>();
+            Sprite sprite2 = new Sprite(ImageCache.getTexture("frog"));
+            Sprite sprite3 = new Sprite(ImageCache.getTexture("frog_jump"));
 
+            sprites.add(sprite2);
+            sprites.add(sprite3);
+
+            animation = new Animation<>(0.5f, sprites);
 
         /*
         //OPTION 1: With SpriteBatch
@@ -36,11 +50,6 @@ public class MenuScreen extends Screen {
         elements.add(control);
         */
 
-            //OPTION 2: With SpriteCache
-            spriteCache = new SpriteCache();
-            spriteCache.beginCache();
-            spriteCache.add(logo.skin, logo.x, logo.y);
-            spriteCacheIndex = spriteCache.endCache();
         }
     }
 
@@ -49,12 +58,11 @@ public class MenuScreen extends Screen {
 
 
         if (Gdx.input.justTouched()) {
-            Gdx.app.log("A HIT!", "A MOST PALPABLE HIT");
-            //game.setScreen("GameScreen");
+            game.setScreen("GameScreen");
 
         } else {
             GL20 gl = Gdx.gl;
-            gl.glClearColor(0.4f, 0.4f, 0.4f, 1);
+            gl.glClearColor(1, 1, 1, 1);
             gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
             game.camera.update();
@@ -77,17 +85,15 @@ public class MenuScreen extends Screen {
         }
         _game.spriteBatch.end();
         */
-
-            //OPTION 2: With SpriteCache
-            gl.glEnable(GL20.GL_BLEND);
-            gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-            spriteCache.setProjectionMatrix(game.camera.combined);
-            spriteCache.begin();
-            spriteCache.draw(spriteCacheIndex);
-            spriteCache.end();
-
-
-
+            i++;
+            elapsedTime += dt;
+            Sprite keyFrame = animation.getKeyFrame(elapsedTime, true);
+            keyFrame.setY(i);
+            keyFrame.setX(240);
+            game.batch.begin();
+            keyFrame.draw(game.batch);
+            //System.out.println(sprite.getRotation());
+            game.batch.end();
         }
 
     }
