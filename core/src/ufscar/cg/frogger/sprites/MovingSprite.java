@@ -8,10 +8,10 @@ import ufscar.cg.frogger.data.GameData;
 import ufscar.cg.frogger.screens.GameScreen;
 
 public class MovingSprite extends Sprite {
-    public static final int  UP = 0;
-    public static final int  DOWN = 1;
-    public static final int  LEFT = 2;
-    public static final int  RIGHT = 3;
+//    public static final int  UP = 0;
+//    public static final int  DOWN = 1;
+//    public static final int  LEFT = 2;
+//    public static final int  RIGHT = 3;
 
     public float vx = 0;
     public float vy = 0;
@@ -51,7 +51,7 @@ public class MovingSprite extends Sprite {
     }
 
     public void update (float dt) {
-        if (getX() > -getWidth()) {
+        if (getX() > -getWidth() && speed < 0 || getX() < game.screenWidth && speed > 0) {
             setX(getX() + speed * dt);
         } else {
             if (speed < 0) {

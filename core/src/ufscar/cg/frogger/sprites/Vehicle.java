@@ -3,6 +3,7 @@ package ufscar.cg.frogger.sprites;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import ufscar.cg.frogger.Frogger;
+import ufscar.cg.frogger.data.GameData;
 import ufscar.cg.frogger.data.ImageCache;
 
 public class Vehicle extends MovingSprite {

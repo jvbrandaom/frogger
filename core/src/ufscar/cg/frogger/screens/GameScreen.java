@@ -18,9 +18,8 @@ public class GameScreen extends Screen {
     private Player player;
     int len;
     float elapsedTime = 0f;
-    static int LEFT = -1;
-    static int RIGHT = 1;
-   
+
+
 
     public GameScreen(Frogger game) {
         super(game);
@@ -33,12 +32,24 @@ public class GameScreen extends Screen {
         if (elements.size() == 0) {
             elements.add(new Sprite(ImageCache.getTexture("background_640")));
         }
-        initializeVehicles(6, 100, LEFT, 3);
+
+        initializeVehicles(6, 60, GameData.LEFT, 5);
+        initializeVehicles(6, 40, GameData.RIGHT, 4);
+        initializeVehicles(6, 50, GameData.LEFT, 3);
+        initializeVehicles(6, 40, GameData.RIGHT, 2);
     }
 
     private void initializeVehicles(int numberOfVehicles, float speed, int direction, int tierIndex) {
         for (int i = 0; i < numberOfVehicles; i ++) {
-            Vehicle vehicle = new Vehicle(game, game.screenWidth + game.screenWidth/numberOfVehicles * i, tierIndex * GameData.TILE_SIZE);
+            Vehicle vehicle;
+            if (direction == GameData.LEFT) {
+               vehicle = new Vehicle(game, game.screenWidth / numberOfVehicles * i,
+                        tierIndex * GameData.TILE_SIZE);
+            } else {
+                vehicle = new Vehicle(game, GameData.TILE_SIZE + game.screenWidth / numberOfVehicles * i,
+                        tierIndex * GameData.TILE_SIZE);
+                vehicle.flip(true, false);
+            }
             vehicle.speed = speed * direction;
         }
     }
