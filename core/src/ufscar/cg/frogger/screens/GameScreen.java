@@ -7,20 +7,20 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import ufscar.cg.frogger.Frogger;
 import ufscar.cg.frogger.data.GameData;
 import ufscar.cg.frogger.data.ImageCache;
+import ufscar.cg.frogger.sprites.TreeLog;
 import ufscar.cg.frogger.sprites.MovingSprite;
 import ufscar.cg.frogger.sprites.Player;
 import ufscar.cg.frogger.sprites.Vehicle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class GameScreen extends Screen {
     private Player player;
     int len;
     float elapsedTime = 0f;
-
-
+    List<Integer> waterTiers = new ArrayList(Arrays.asList(7, 8, 9, 10, 11, 12));
 
     public GameScreen(Frogger game) {
         super(game);
@@ -38,6 +38,13 @@ public class GameScreen extends Screen {
         initializeVehicles(6, 40, GameData.RIGHT, 4);
         initializeVehicles(6, 50, GameData.LEFT, 3);
         initializeVehicles(6, 40, GameData.RIGHT, 2);
+        //7-12
+        initializeLogs(3, 50, GameData.LEFT, 7);
+        initializeLogs(3, 50, GameData.RIGHT, 8);
+        initializeLogs(3, 50, GameData.LEFT, 9);
+        initializeLogs(3, 50, GameData.RIGHT, 10);
+        initializeLogs(3, 50, GameData.LEFT, 11);
+        initializeLogs(3, 50, GameData.RIGHT, 12);
     }
 
     private void initializeVehicles(int numberOfVehicles, float speed, int direction, int tierIndex) {
@@ -52,6 +59,21 @@ public class GameScreen extends Screen {
                 vehicle.flip(true, false);
             }
             vehicle.speed = speed * direction;
+        }
+    }
+
+    private void initializeLogs(int numberOfVehicles, float speed, int direction, int tierIndex) {
+        for (int i = 0; i < numberOfVehicles; i ++) {
+            TreeLog treeLog;
+            if (direction == GameData.LEFT) {
+                treeLog = new TreeLog(game, game.screenWidth / numberOfVehicles * i,
+                        tierIndex * GameData.TILE_SIZE);
+            } else {
+                treeLog = new TreeLog(game, GameData.TILE_SIZE + game.screenWidth / numberOfVehicles * i,
+                        tierIndex * GameData.TILE_SIZE);
+                treeLog.flip(true, false);
+            }
+            treeLog.speed = speed * direction;
         }
     }
 
@@ -81,16 +103,25 @@ public class GameScreen extends Screen {
         game.batch.begin();
         len = elements.size();
         Sprite element;
-
+        Boolean collision;
 
         for (int i = 0; i < len; i++) {
             element = elements.get(i);
             if (element instanceof MovingSprite) {
-                ((Vehicle) element).update(dt);
-                checkCollision(element);
+                ((MovingSprite) element).update(dt);
             }
             element.draw(game.batch);
         }
+
+        collision = checkCollision(dt);
+        //If there is no collision in water region, it means that the player is not on a log, thus it's game over
+        //Otherwise, it's a collision with a vehicle, so it's game over
+        if (waterTiers.contains(player.tierIndex) && !collision) {
+            gameOver();
+        } else if (!waterTiers.contains(player.tierIndex) && collision) {
+            gameOver();
+        }
+
 
         if (player.isMoving) {
             Sprite keyFrame = player.frogUp.getKeyFrame(elapsedTime, false);
@@ -113,11 +144,32 @@ public class GameScreen extends Screen {
         game.batch.end();
     }
 
-    private void checkCollision(Sprite element) {
-        if (player.getBoundingRectangle().overlaps(element.getBoundingRectangle())) {
-            System.out.print("Game Over");
-            player.reset();
+    private Boolean checkCollision(float dt) {
+        for (Sprite sprite : elements) {
+            if (!(sprite instanceof MovingSprite)) {
+                continue;
+            }
+            MovingSprite element = (MovingSprite) sprite;
+
+            if (player.getBoundingRectangle().overlaps(element.getBoundingRectangle())) {
+                if (element instanceof Vehicle) {
+                    gameOver();
+                    return true;
+                }
+                if (element instanceof TreeLog) {
+                    System.out.println("I'm on a tree log!");
+                    player.speed = element.speed;
+                    player.update(dt);
+                    return true;
+                }
+            }
         }
+        return false;
+    }
+
+    private void gameOver() {
+        System.out.println("Game Over");
+        player.reset();
     }
 
 }

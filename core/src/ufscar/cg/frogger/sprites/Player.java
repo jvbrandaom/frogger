@@ -22,6 +22,7 @@ public class Player extends MovingSprite {
     Sprite sprite1 = new Sprite(ImageCache.getTexture("frog_jump"));
     Sprite sprite2 = new Sprite(ImageCache.getTexture("frog"));
     public int tierIndex = 0;
+    public boolean isOnALog;
 
     public Player(Frogger game, float x, float y) {
         super(game, x, y);
@@ -32,6 +33,7 @@ public class Player extends MovingSprite {
         frogUp = new Animation(0.1f, sprites);
         isVisible = true;
         isMoving = false;
+        isOnALog = false;
     }
 
     private void setPlayer() {
@@ -84,6 +86,8 @@ public class Player extends MovingSprite {
     }
 
     public void reset() {
+        tierIndex = 0;
+        isOnALog = false;
         setPosition(320, 0);
     }
 }
