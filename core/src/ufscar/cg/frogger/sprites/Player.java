@@ -26,7 +26,7 @@ public class Player extends MovingSprite {
     public Player(Frogger game, float x, float y) {
         super(game, x, y);
         setPlayer();
-        Array<Sprite> sprites = new Array<>();
+        Array<Sprite> sprites = new Array<Sprite>();
         sprites.add(sprite1);
         sprites.add(sprite2);
         frogUp = new Animation(0.1f, sprites);

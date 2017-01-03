@@ -20,10 +20,9 @@ public class GameScreen extends Screen {
     float elapsedTime = 0f;
 
 
-
     public GameScreen(Frogger game) {
         super(game);
-        elements = new ArrayList<>();
+        elements = new ArrayList<Sprite>();
     }
 
     @Override
@@ -33,21 +32,21 @@ public class GameScreen extends Screen {
             elements.add(new Sprite(ImageCache.getTexture("background_640")));
         }
 
-        initializeVehicles(6, 60, GameData.LEFT, 5);
-        initializeVehicles(6, 40, GameData.RIGHT, 4);
-        initializeVehicles(6, 50, GameData.LEFT, 3);
-        initializeVehicles(6, 40, GameData.RIGHT, 2);
+        initializeVehicles(5, 90, GameData.LEFT, 5, "car1");
+        initializeVehicles(6, 50, GameData.RIGHT, 4, "car2");
+        initializeVehicles(5, 60, GameData.LEFT, 3, "car1");
+        initializeVehicles(5, 30, GameData.RIGHT, 2, "truck");
     }
 
-    private void initializeVehicles(int numberOfVehicles, float speed, int direction, int tierIndex) {
+    private void initializeVehicles(int numberOfVehicles, float speed, int direction, int tierIndex, String textureRegion) {
         for (int i = 0; i < numberOfVehicles; i ++) {
             Vehicle vehicle;
             if (direction == GameData.LEFT) {
                vehicle = new Vehicle(game, game.screenWidth / numberOfVehicles * i,
-                        tierIndex * GameData.TILE_SIZE);
+                        tierIndex * GameData.TILE_SIZE, textureRegion);
             } else {
                 vehicle = new Vehicle(game, GameData.TILE_SIZE + game.screenWidth / numberOfVehicles * i,
-                        tierIndex * GameData.TILE_SIZE);
+                        tierIndex * GameData.TILE_SIZE, textureRegion);
                 vehicle.flip(true, false);
             }
             vehicle.speed = speed * direction;
