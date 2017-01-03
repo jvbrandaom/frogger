@@ -35,21 +35,21 @@ public class GameScreen extends Screen {
             elements.add(new Sprite(ImageCache.getTexture("background_640")));
         }
 
-        initializeVehicles(5, 90, GameData.LEFT, 5, "car1");
-        initializeVehicles(6, 50, GameData.RIGHT, 4, "car2");
-        initializeVehicles(5, 60, GameData.LEFT, 3, "car1");
-        initializeVehicles(5, 30, GameData.RIGHT, 2, "truck");
+        initializeVehicles(4, 100, GameData.LEFT, 5, "car1");
+        initializeVehicles(5, 60, GameData.RIGHT, 4, "car2");
+        initializeVehicles(4, 70, GameData.LEFT, 3, "car1");
+        initializeVehicles(4, 40, GameData.RIGHT, 2, "truck");
         //7-12
-        initializeLogs(3, 50, GameData.LEFT, 7);
-        initializeLogs(3, 50, GameData.RIGHT, 8);
-        initializeLogs(3, 50, GameData.LEFT, 9);
-        initializeLogs(3, 50, GameData.RIGHT, 10);
-        initializeLogs(3, 50, GameData.LEFT, 11);
-        initializeLogs(3, 50, GameData.RIGHT, 12);
+        initializeLogs(3, 60, GameData.LEFT, 7, "wood2");
+        initializeLogs(3, 50, GameData.RIGHT, 8, "wood3");
+        initializeLogs(2, 60, GameData.LEFT, 9, "wood4");
+        initializeLogs(3, 70, GameData.RIGHT, 10, "wood2");
+        initializeLogs(2, 40, GameData.LEFT, 11, "wood3");
+        initializeLogs(3, 50, GameData.RIGHT, 12, "wood2");
     }
 
     private void initializeVehicles(int numberOfVehicles, float speed, int direction, int tierIndex, String textureRegion) {
-        for (int i = 0; i < numberOfVehicles; i ++) {
+        for (int i = 0; i < numberOfVehicles; i++) {
             Vehicle vehicle;
             if (direction == GameData.LEFT) {
                vehicle = new Vehicle(game, game.screenWidth / numberOfVehicles * i,
@@ -63,15 +63,15 @@ public class GameScreen extends Screen {
         }
     }
 
-    private void initializeLogs(int numberOfVehicles, float speed, int direction, int tierIndex) {
-        for (int i = 0; i < numberOfVehicles; i ++) {
+    private void initializeLogs(int numberOfLogs, float speed, int direction, int tierIndex, String textureRegion) {
+        for (int i = 0; i < numberOfLogs; i++) {
             TreeLog treeLog;
             if (direction == GameData.LEFT) {
-                treeLog = new TreeLog(game, game.screenWidth / numberOfVehicles * i,
-                        tierIndex * GameData.TILE_SIZE);
+                treeLog = new TreeLog(game, game.screenWidth / numberOfLogs * i,
+                        tierIndex * GameData.TILE_SIZE, textureRegion);
             } else {
-                treeLog = new TreeLog(game, GameData.TILE_SIZE + game.screenWidth / numberOfVehicles * i,
-                        tierIndex * GameData.TILE_SIZE);
+                treeLog = new TreeLog(game, GameData.TILE_SIZE + game.screenWidth / numberOfLogs * i,
+                        tierIndex * GameData.TILE_SIZE, textureRegion);
                 treeLog.flip(true, false);
             }
             treeLog.speed = speed * direction;

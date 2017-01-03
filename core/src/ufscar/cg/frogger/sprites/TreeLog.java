@@ -7,17 +7,19 @@ import ufscar.cg.frogger.data.ImageCache;
 
 public class TreeLog extends MovingSprite {
 
-    TextureRegion region = ImageCache.getTexture("wood3");
-    public int tierIndex;
-
-    public TreeLog(Frogger game, float x, float y) {
+    public TreeLog(Frogger game, float x, float y, String textureRegion) {
         super(game, x, y);
         this.game = game;
+
+        setLogTexture(ImageCache.getTexture(textureRegion));
+        setOrigin(getWidth() / 2, getHeight() / 2);
+        game.screen.elements.add(this);
+    }
+
+    private void setLogTexture(TextureRegion region){
         setRegion(region);
         setColor(1, 1, 1, 1);
         setSize(region.getRegionWidth(), region.getRegionHeight());
-        setOrigin(getWidth() / 2, getHeight() / 2);
-        game.screen.elements.add(this);
     }
 
 }
