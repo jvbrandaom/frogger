@@ -32,12 +32,12 @@ public class MenuScreen extends Screen {
         title = new BitmapFont();
 
         if (elements.size() == 0) {
-            Array<Sprite> sprites = new Array<>();
+            Array<Sprite> sprites = new Array<Sprite>();
             Sprite sprite2 = new Sprite(ImageCache.getTexture("frog"));
             Sprite sprite3 = new Sprite(ImageCache.getTexture("frog_jump"));
             sprites.add(sprite2);
             sprites.add(sprite3);
-            animation = new Animation<>(0.5f, sprites);
+            animation = new Animation<Sprite>(0.5f, sprites);
         }
     }
 

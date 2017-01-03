@@ -8,17 +8,19 @@ import ufscar.cg.frogger.data.ImageCache;
 
 public class Vehicle extends MovingSprite {
 
-    TextureRegion region = ImageCache.getTexture("car1");
-    public int tierIndex;
-
-    public Vehicle (Frogger game, float x, float y) {
+    public Vehicle (Frogger game, float x, float y, String textureRegion) {
         super(game, x, y);
         this.game = game;
+
+        setVehicle(ImageCache.getTexture(textureRegion));
+        setOrigin(getWidth() / 2, getHeight() / 2);
+        game.screen.elements.add(this);
+    }
+
+    private void setVehicle(TextureRegion region){
         setRegion(region);
         setColor(1, 1, 1, 1);
         setSize(region.getRegionWidth(), region.getRegionHeight());
-        setOrigin(getWidth() / 2, getHeight() / 2);
-        game.screen.elements.add(this);
     }
 
 }
