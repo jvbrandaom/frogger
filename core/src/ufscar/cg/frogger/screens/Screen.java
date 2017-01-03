@@ -16,7 +16,7 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
 
     public Screen (Frogger game) {
         this.game = game;
-        elements = new ArrayList<>();
+        elements = new ArrayList<Sprite>();
     }
 
     public void pause () {};
