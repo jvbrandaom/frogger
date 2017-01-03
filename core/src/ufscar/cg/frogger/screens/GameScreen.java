@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import ufscar.cg.frogger.Frogger;
 import ufscar.cg.frogger.data.GameData;
 import ufscar.cg.frogger.data.ImageCache;
+import ufscar.cg.frogger.sprites.MovingSprite;
 import ufscar.cg.frogger.sprites.Player;
 import ufscar.cg.frogger.sprites.Vehicle;
 
@@ -84,8 +85,9 @@ public class GameScreen extends Screen {
 
         for (int i = 0; i < len; i++) {
             element = elements.get(i);
-            if (element instanceof Vehicle) {
+            if (element instanceof MovingSprite) {
                 ((Vehicle) element).update(dt);
+                checkCollision(element);
             }
             element.draw(game.batch);
         }
@@ -109,6 +111,13 @@ public class GameScreen extends Screen {
         }
 
         game.batch.end();
+    }
+
+    private void checkCollision(Sprite element) {
+        if (player.getBoundingRectangle().overlaps(element.getBoundingRectangle())) {
+            System.out.print("Game Over");
+            player.reset();
+        }
     }
 
 }

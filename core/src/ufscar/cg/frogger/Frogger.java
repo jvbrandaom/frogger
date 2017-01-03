@@ -28,6 +28,7 @@ public class Frogger extends ApplicationAdapter {
     public int screenWidth = 0;
     public int screenHeight = 0;
     public GameData gameData;
+    public int currentState;
 	
 	@Override
 	public void create () {
@@ -43,11 +44,12 @@ public class Frogger extends ApplicationAdapter {
         screens = new HashMap<String, Screen>();
         batch = new SpriteBatch();
         setScreen("MenuScreen");
+        currentState = GAME_STATE_PLAY;
     }
 
 	@Override
 	public void render () {
-        if (screen != null) {
+        if (screen != null && currentState != GAME_STATE_PAUSE) {
             screen.update(Gdx.graphics.getDeltaTime());
         } else {
             GL20 gl = Gdx.gl;

@@ -82,4 +82,8 @@ public class Player extends MovingSprite {
     public void draw () {
         draw(game.batch);
     }
+
+    public void reset() {
+        setPosition(320, 0);
+    }
 }
