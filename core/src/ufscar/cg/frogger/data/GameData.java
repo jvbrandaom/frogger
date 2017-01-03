@@ -7,6 +7,7 @@ public class GameData {
     public static final int POINTS_TARGET = 100;
     public static final int POINTS_FLY = 100;
     public static final int POINTS_BONUS = 200;
+    public static final int TILE_SIZE = 32;
 
     public int score = 0;
     public int level = 1;

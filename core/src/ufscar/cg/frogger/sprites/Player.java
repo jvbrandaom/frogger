@@ -21,6 +21,7 @@ public class Player extends MovingSprite {
     TextureRegion region = ImageCache.getTexture("frog");
     Sprite sprite1 = new Sprite(ImageCache.getTexture("frog_jump"));
     Sprite sprite2 = new Sprite(ImageCache.getTexture("frog"));
+    public int tierIndex = 0;
 
     public Player(Frogger game, float x, float y) {
         super(game, x, y);
@@ -45,6 +46,8 @@ public class Player extends MovingSprite {
         setScale(1, 1);
         setY(getY() + jumpSize);
         isMoving = true;
+        tierIndex += 1;
+        System.out.println(tierIndex);
     }
 
     public void moveFrogDown() {
@@ -52,6 +55,8 @@ public class Player extends MovingSprite {
         setScale(1, -1);
         setY(getY() - jumpSize);
         isMoving = true;
+        tierIndex -= 1;
+        System.out.println(tierIndex);
     }
 
     public void moveFrogLeft() {

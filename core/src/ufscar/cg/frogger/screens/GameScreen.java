@@ -5,18 +5,22 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import ufscar.cg.frogger.Frogger;
+import ufscar.cg.frogger.data.GameData;
 import ufscar.cg.frogger.data.ImageCache;
 import ufscar.cg.frogger.sprites.Player;
+import ufscar.cg.frogger.sprites.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GameScreen extends Screen {
-
-    public List<Sprite> elements;
     private Player player;
     int len;
     float elapsedTime = 0f;
+    static int LEFT = -1;
+    static int RIGHT = 1;
+   
 
     public GameScreen(Frogger game) {
         super(game);
@@ -29,7 +33,14 @@ public class GameScreen extends Screen {
         if (elements.size() == 0) {
             elements.add(new Sprite(ImageCache.getTexture("background_640")));
         }
+        initializeVehicles(6, 100, LEFT, 3);
+    }
 
+    private void initializeVehicles(int numberOfVehicles, float speed, int direction, int tierIndex) {
+        for (int i = 0; i < numberOfVehicles; i ++) {
+            Vehicle vehicle = new Vehicle(game, game.screenWidth + game.screenWidth/numberOfVehicles * i, tierIndex * GameData.TILE_SIZE);
+            vehicle.speed = speed * direction;
+        }
     }
 
     @Override
@@ -58,8 +69,13 @@ public class GameScreen extends Screen {
         game.batch.begin();
         len = elements.size();
         Sprite element;
+
+
         for (int i = 0; i < len; i++) {
             element = elements.get(i);
+            if (element instanceof Vehicle) {
+                ((Vehicle) element).update(dt);
+            }
             element.draw(game.batch);
         }
 

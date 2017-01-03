@@ -1,6 +1,7 @@
 package ufscar.cg.frogger.screens;
 
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import ufscar.cg.frogger.Frogger;
 import ufscar.cg.frogger.sprites.GameSprite;
 
@@ -10,12 +11,12 @@ import java.util.List;
 public abstract class Screen implements com.badlogic.gdx.Screen {
 
 
-    public List<GameSprite> elements;
+    public List<Sprite> elements;
     protected Frogger game;
 
     public Screen (Frogger game) {
         this.game = game;
-        elements = new ArrayList<GameSprite>();
+        elements = new ArrayList<>();
     }
 
     public void pause () {};

@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import ufscar.cg.frogger.Frogger;
+import ufscar.cg.frogger.data.GameData;
+import ufscar.cg.frogger.screens.GameScreen;
 
 public class MovingSprite extends Sprite {
     public static final int  UP = 0;
@@ -17,11 +19,13 @@ public class MovingSprite extends Sprite {
     public float nextY = 0;
     public float speed;
     Frogger game;
+    public float initialX;
 
     public MovingSprite (Frogger game, float x, float y) {
         this.game = game;
         setX(x);
         setY(y);
+        initialX = x;
         nextX = x;
         nextY = y;
     }
@@ -47,7 +51,15 @@ public class MovingSprite extends Sprite {
     }
 
     public void update (float dt) {
-        nextX += speed * dt;
+        if (getX() > -getWidth()) {
+            setX(getX() + speed * dt);
+        } else {
+            if (speed < 0) {
+                setX(game.screenWidth);
+            } else {
+                setX(-GameData.TILE_SIZE);
+            }
+        }
     }
 
     public void place () {
