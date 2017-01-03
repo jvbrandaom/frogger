@@ -35,21 +35,9 @@ public class MenuScreen extends Screen {
             Array<Sprite> sprites = new Array<>();
             Sprite sprite2 = new Sprite(ImageCache.getTexture("frog"));
             Sprite sprite3 = new Sprite(ImageCache.getTexture("frog_jump"));
-
             sprites.add(sprite2);
             sprites.add(sprite3);
-
             animation = new Animation<>(0.5f, sprites);
-
-        /*
-        //OPTION 1: With SpriteBatch
-        elements.add(logo);
-        elements.add(label1);
-        elements.add(label2);
-        elements.add(label3);
-        elements.add(control);
-        */
-
         }
     }
 
@@ -70,21 +58,6 @@ public class MenuScreen extends Screen {
             title.setColor(Color.GREEN);
             title.draw(game.batch, "Frogger", 300, 300);
             game.batch.end();
-
-        /*
-        //OPTION 1: With SpriteBatch
-        _game.spriteBatch.setProjectionMatrix(_game.camera.combined);
-        _game.spriteBatch.enableBlending();
-        _game.spriteBatch.begin();
-
-        int len = elements.size();
-        GameSprite element;
-        for (int i = 0; i < len; i++) {
-            element = elements.get(i);
-            _game.spriteBatch.draw(element.skin, element.x, element.y);
-        }
-        _game.spriteBatch.end();
-        */
             i++;
             elapsedTime += dt;
             Sprite keyFrame = animation.getKeyFrame(elapsedTime, true);

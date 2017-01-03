@@ -16,6 +16,7 @@ public class GameScreen extends Screen {
     public List<Sprite> elements;
     private Player player;
     int len;
+    float elapsedTime = 0f;
 
     public GameScreen(Frogger game) {
         super(game);
@@ -25,10 +26,8 @@ public class GameScreen extends Screen {
     @Override
     public void createScreen() {
         player = new Player(game, 320, 0);
-
         if (elements.size() == 0) {
             elements.add(new Sprite(ImageCache.getTexture("background_640")));
-            elements.add(player);
         }
 
     }
@@ -38,8 +37,6 @@ public class GameScreen extends Screen {
         GL20 gl = Gdx.gl;
         gl.glClearColor(0, 0, 0, 1);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        game.camera.update();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
             player.moveFrogLeft();
@@ -54,17 +51,37 @@ public class GameScreen extends Screen {
             player.moveFrogDown();
         }
 
+
+        game.camera.update();
         game.batch.setProjectionMatrix(game.camera.combined);
         game.batch.enableBlending();
         game.batch.begin();
-
         len = elements.size();
         Sprite element;
         for (int i = 0; i < len; i++) {
             element = elements.get(i);
             element.draw(game.batch);
         }
-        game.batch.end();
 
+        if (player.isMoving) {
+            Sprite keyFrame = player.frogUp.getKeyFrame(elapsedTime, false);
+            keyFrame.setPosition(player.getX(), player.getY());
+            keyFrame.setRotation(player.getRotation());
+            keyFrame.setScale(player.getScaleX(), player.getScaleY());
+            if (!player.frogUp.isAnimationFinished(elapsedTime)) {
+                elapsedTime += dt;
+                keyFrame.draw(game.batch);
+            } else {
+                player.isMoving = false;
+                elapsedTime = 0f;
+                player.draw();
+            }
+        }
+        else {
+            player.draw();
+        }
+
+        game.batch.end();
     }
+
 }

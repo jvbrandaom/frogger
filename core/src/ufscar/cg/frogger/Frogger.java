@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ufscar.cg.frogger.data.GameData;
 import ufscar.cg.frogger.data.ImageCache;
+import ufscar.cg.frogger.screens.GameScreen;
+import ufscar.cg.frogger.screens.MenuScreen;
 import ufscar.cg.frogger.screens.Screen;
 
 import java.lang.reflect.Constructor;
@@ -62,25 +64,15 @@ public class Frogger extends ApplicationAdapter {
 
     public void setScreen (String screenClassName) {
 
-        screenClassName = "ufscar.cg.frogger.screens."+screenClassName;
         Screen newScreen = null;
 
         if (screens.containsKey(screenClassName) == false) {
-
-            try {
-                Class screenClass =  Class.forName(screenClassName);
-                Constructor constructor = screenClass.getConstructor(Frogger.class);
-                newScreen = (Screen) constructor.newInstance(this);
-                screens.put(screenClassName, newScreen);
-            } catch ( InvocationTargetException ex ){
-                System.err.println( ex + " Screen with Wrong args in Constructor.");
-            } catch ( NoSuchMethodException ex ){
-            } catch ( ClassNotFoundException ex ){
-                System.err.println( ex + " Screen Class Not Found.");
-            } catch( InstantiationException ex ){
-                System.err.println( ex + " Screen Must be a concrete class.");
-            } catch( IllegalAccessException ex ){
-                System.err.println( ex + " Screen with Wrong number of args.");
+            if (screenClassName.equals("GameScreen")) {
+                newScreen = new GameScreen(this);
+                screens.put("GameScreen", newScreen);
+            } else if (screenClassName.equals("MenuScreen")) {
+                newScreen = new MenuScreen(this);
+                screens.put("MenuScreen", newScreen);
             }
         } else {
             newScreen = screens.get(screenClassName);
