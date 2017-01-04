@@ -6,18 +6,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteCache;
 import com.badlogic.gdx.utils.Array;
 import ufscar.cg.frogger.Frogger;
 import ufscar.cg.frogger.data.ImageCache;
-import ufscar.cg.frogger.sprites.GameSprite;
 
-import java.util.ArrayList;
 
 public class MenuScreen extends Screen {
 
-    private SpriteCache spriteCache;
-    private int spriteCacheIndex;
     private BitmapFont title;
     private Animation<Sprite> animation;
     private float elapsedTime = 0f;
@@ -65,7 +60,6 @@ public class MenuScreen extends Screen {
             keyFrame.setX(240);
             game.batch.begin();
             keyFrame.draw(game.batch);
-            //System.out.println(sprite.getRotation());
             game.batch.end();
         }
 

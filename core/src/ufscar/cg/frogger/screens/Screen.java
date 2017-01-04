@@ -3,7 +3,6 @@ package ufscar.cg.frogger.screens;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import ufscar.cg.frogger.Frogger;
-import ufscar.cg.frogger.sprites.GameSprite;
 
 import java.util.ArrayList;
 import java.util.List;

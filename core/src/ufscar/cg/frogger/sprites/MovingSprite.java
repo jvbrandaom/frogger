@@ -1,11 +1,8 @@
 package ufscar.cg.frogger.sprites;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import ufscar.cg.frogger.Frogger;
 import ufscar.cg.frogger.data.GameData;
-import ufscar.cg.frogger.screens.GameScreen;
 
 public class MovingSprite extends Sprite {
     public float speed;
