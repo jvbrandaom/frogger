@@ -1,16 +1,16 @@
 package ufscar.cg.frogger.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import ufscar.cg.frogger.Frogger;
 import ufscar.cg.frogger.data.GameData;
 import ufscar.cg.frogger.data.ImageCache;
-import ufscar.cg.frogger.sprites.TreeLog;
-import ufscar.cg.frogger.sprites.MovingSprite;
-import ufscar.cg.frogger.sprites.Player;
-import ufscar.cg.frogger.sprites.Vehicle;
+import ufscar.cg.frogger.sprites.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +19,7 @@ import java.util.List;
 public class GameScreen extends Screen {
     private Player player;
     int len;
+    private BitmapFont score;
     float elapsedTime = 0f;
     List<Integer> waterTiers = new ArrayList(Arrays.asList(7, 8, 9, 10, 11, 12));
 
@@ -35,6 +36,8 @@ public class GameScreen extends Screen {
             elements.add(new Sprite(ImageCache.getTexture("background_640")));
         }
 
+        score = new BitmapFont();
+        score.setColor(Color.WHITE);
         initializeVehicles(4, 100, GameData.LEFT, 5, "car1");
         initializeVehicles(5, 60, GameData.RIGHT, 4, "car2");
         initializeVehicles(4, 70, GameData.LEFT, 3, "car1");
@@ -141,6 +144,11 @@ public class GameScreen extends Screen {
         else {
             player.draw();
         }
+
+        if(game.gameData.score < 0){
+            game.gameData.score = 0;
+        }
+        score.draw(game.batch, "SCORE: " + game.gameData.score, 10, 470);
 
         game.batch.end();
     }

@@ -5,16 +5,14 @@ import ufscar.cg.frogger.Frogger;
 public class GameData {
     public static final int POINTS_JUMP = 10;
     public static final int POINTS_TARGET = 100;
-    public static final int POINTS_FLY = 100;
-    public static final int POINTS_BONUS = 200;
     public static final int TILE_SIZE = 32;
     public static final int LEFT = -1;
     public static final int RIGHT = 1;
+    public static int score = 0;
 
-    public int score = 0;
     public int level = 1;
     public int lives = 3;
-    public int gameMode;
+    public static int gameMode;
     public int targetsReached = 0;
     public float tierSpeed1 = 1.0f;
     public float tierSpeed2 = 1.0f;

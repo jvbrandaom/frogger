@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import ufscar.cg.frogger.Frogger;
+import ufscar.cg.frogger.data.GameData;
 import ufscar.cg.frogger.data.ImageCache;
 
 public class Player extends MovingSprite {
@@ -50,6 +51,7 @@ public class Player extends MovingSprite {
         isMoving = true;
         tierIndex += 1;
         System.out.println(tierIndex);
+        game.gameData.score += 8;
     }
 
     public void moveFrogDown() {
@@ -59,6 +61,7 @@ public class Player extends MovingSprite {
         isMoving = true;
         tierIndex -= 1;
         System.out.println(tierIndex);
+        game.gameData.score -= 10;
     }
 
     public void moveFrogLeft() {
@@ -69,6 +72,7 @@ public class Player extends MovingSprite {
         }
         setX(getX() - jumpSize);
         isMoving = true;
+        game.gameData.score -= 1;
     }
 
     public void moveFrogRight() {
@@ -79,6 +83,7 @@ public class Player extends MovingSprite {
         }
         setX(getX() + jumpSize);
         isMoving = true;
+        game.gameData.score -= 1;
     }
 
     public void draw () {
