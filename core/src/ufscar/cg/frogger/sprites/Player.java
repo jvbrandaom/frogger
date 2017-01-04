@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import ufscar.cg.frogger.Frogger;
-import ufscar.cg.frogger.data.GameData;
 import ufscar.cg.frogger.data.ImageCache;
 
 public class Player extends MovingSprite {
@@ -51,11 +50,14 @@ public class Player extends MovingSprite {
     public void moveFrogDown() {
         setRotation(0f);
         setScale(1, -1);
-        setY(getY() - jumpSize);
-        isMoving = true;
-        tierIndex -= 1;
-        System.out.println(tierIndex);
-        game.gameData.score -= 10;
+        // verify if frog is not in the bottom tier
+        if(tierIndex>0) {
+            setY(getY() - jumpSize);
+            isMoving = true;
+            tierIndex -= 1;
+            System.out.println(tierIndex);
+            game.gameData.score -= 10;
+        }
     }
 
     public void moveFrogLeft() {
@@ -64,9 +66,13 @@ public class Player extends MovingSprite {
         } else {
             setRotation(90f);
         }
-        setX(getX() - jumpSize);
-        isMoving = true;
-        game.gameData.score -= 1;
+        // verify if frog is not in the left corner
+        if(getX()>0) {
+            setX(getX() - jumpSize);
+            isMoving = true;
+            System.out.println(getX());
+            game.gameData.score -= 1;
+        }
     }
 
     public void moveFrogRight() {
@@ -75,9 +81,13 @@ public class Player extends MovingSprite {
         } else {
             setRotation(-90f);
         }
-        setX(getX() + jumpSize);
-        isMoving = true;
-        game.gameData.score -= 1;
+        // verify if frog is not in the right corner
+        if(getX()<(game.screenWidth - getWidth())) {
+            setX(getX() + jumpSize);
+            isMoving = true;
+            System.out.println(getX());
+            game.gameData.score -= 1;
+        }
     }
 
     public void draw () {
