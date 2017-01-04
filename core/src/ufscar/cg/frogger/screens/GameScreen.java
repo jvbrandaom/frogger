@@ -20,9 +20,10 @@ public class GameScreen extends Screen {
     private Player player;
     int len;
     private BitmapFont score;
+    private BitmapFont gameStatus;
     float elapsedTime = 0f;
     List<Integer> waterTiers = new ArrayList(Arrays.asList(7, 8, 9, 10, 11, 12));
-
+    private String gameStatusMessage = "";
 
     public GameScreen(Frogger game) {
         super(game);
@@ -37,6 +38,8 @@ public class GameScreen extends Screen {
         }
 
         score = new BitmapFont();
+        gameStatus = new BitmapFont();
+        gameStatus.setColor(Color.RED);
         score.setColor(Color.WHITE);
         initializeVehicles(4, 100, GameData.LEFT, 5, "car1");
         initializeVehicles(5, 60, GameData.RIGHT, 4, "car2");
@@ -87,45 +90,52 @@ public class GameScreen extends Screen {
         gl.glClearColor(0, 0, 0, 1);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-            player.moveFrogLeft();
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-            player.moveFrogRight();
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-            player.moveFrogUp();
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-            player.moveFrogDown();
-        }
+        if (game.currentState != game.GAME_STATE_PAUSE) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+                player.moveFrogLeft();
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+                player.moveFrogRight();
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+                player.moveFrogUp();
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+                player.moveFrogDown();
+            }
 
+            for (Sprite element : elements) {
+                if (element instanceof MovingSprite) {
+                    ((MovingSprite) element).update(dt);
+                }
+            }
+
+
+            Boolean collision;
+            collision = checkCollision(dt);
+            //If there is no collision in water region, it means that the player is not on a log, thus it's game over
+            //Otherwise, it's a collision with a vehicle, so it's game over
+            if (waterTiers.contains(player.tierIndex) && !collision) {
+                gameOver();
+            } else if (!waterTiers.contains(player.tierIndex) && collision) {
+                gameOver();
+            }
+            checkWin();
+            //if (player.tierIndex == )
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            player.reset();
+            game.currentState = game.GAME_STATE_PLAY;
+            game.gameData.score = 0;
+        }
 
         game.camera.update();
         game.batch.setProjectionMatrix(game.camera.combined);
         game.batch.enableBlending();
         game.batch.begin();
-        len = elements.size();
-        Sprite element;
-        Boolean collision;
 
-        for (int i = 0; i < len; i++) {
-            element = elements.get(i);
-            if (element instanceof MovingSprite) {
-                ((MovingSprite) element).update(dt);
-            }
+        for (Sprite element : elements) {
             element.draw(game.batch);
         }
-
-        collision = checkCollision(dt);
-        //If there is no collision in water region, it means that the player is not on a log, thus it's game over
-        //Otherwise, it's a collision with a vehicle, so it's game over
-        if (waterTiers.contains(player.tierIndex) && !collision) {
-            gameOver();
-        } else if (!waterTiers.contains(player.tierIndex) && collision) {
-            gameOver();
-        }
-
 
         if (player.isMoving) {
             Sprite keyFrame = player.frogUp.getKeyFrame(elapsedTime, false);
@@ -150,7 +160,18 @@ public class GameScreen extends Screen {
         }
         score.draw(game.batch, "SCORE: " + game.gameData.score, 10, 470);
 
+        if (game.currentState == game.GAME_STATE_PAUSE) {
+            gameStatus.draw(game.batch, gameStatusMessage, 300, 300);
+        }
+
         game.batch.end();
+    }
+
+    private void checkWin() {
+        if (player.tierIndex == 13) {
+            gameStatusMessage = "You Won!\nYour Score was: " + game.gameData.score + "\nPress ENTER to play again";
+            game.currentState = Frogger.GAME_STATE_PAUSE;
+        }
     }
 
     private Boolean checkCollision(float dt) {
@@ -178,7 +199,8 @@ public class GameScreen extends Screen {
 
     private void gameOver() {
         System.out.println("Game Over");
-        player.reset();
+        gameStatusMessage = "YOU DIED!\nYour score was: " + game.gameData.score + "\nPress ENTER to play again";
+        game.currentState = Frogger.GAME_STATE_PAUSE;
     }
 
 }

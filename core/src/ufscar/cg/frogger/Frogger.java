@@ -2,6 +2,7 @@ package ufscar.cg.frogger;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -49,7 +50,7 @@ public class Frogger extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-        if (screen != null && currentState != GAME_STATE_PAUSE) {
+        if (screen != null) {
             screen.update(Gdx.graphics.getDeltaTime());
         } else {
             GL20 gl = Gdx.gl;
