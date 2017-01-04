@@ -9,12 +9,6 @@ import ufscar.cg.frogger.data.GameData;
 import ufscar.cg.frogger.data.ImageCache;
 
 public class Player extends MovingSprite {
-
-    public static final int MOVE_TOP = 0;
-    public static final int MOVE_DOWN = 1;
-    public static final int MOVE_LEFT = 2;
-    public static final int MOVE_RIGHT = 3;
-    public Boolean dead = false;
     public Animation<Sprite> frogUp;
     public int jumpSize = 32;
     public boolean isVisible;

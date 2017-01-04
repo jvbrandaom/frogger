@@ -1,6 +1,5 @@
 package ufscar.cg.frogger.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -18,7 +17,6 @@ import java.util.List;
 
 public class GameScreen extends Screen {
     private Player player;
-    int len;
     private BitmapFont score;
     private BitmapFont gameStatus;
     float elapsedTime = 0f;

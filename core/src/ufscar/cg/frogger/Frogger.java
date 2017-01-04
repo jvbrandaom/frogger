@@ -2,7 +2,6 @@ package ufscar.cg.frogger;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,15 +11,11 @@ import ufscar.cg.frogger.data.ImageCache;
 import ufscar.cg.frogger.screens.GameScreen;
 import ufscar.cg.frogger.screens.MenuScreen;
 import ufscar.cg.frogger.screens.Screen;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 public class Frogger extends ApplicationAdapter {
     public static final int GAME_STATE_PLAY = 0;
     public static final int GAME_STATE_PAUSE = 1;
-    public static final int GAME_STATE_ANIMATE = 2;
     public OrthographicCamera camera;
     public Screen screen;
     public HashMap<String, Screen> screens;

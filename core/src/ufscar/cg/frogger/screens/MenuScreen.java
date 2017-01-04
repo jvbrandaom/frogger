@@ -45,7 +45,7 @@ public class MenuScreen extends Screen {
     public void update(float dt) {
 
 
-        if (Gdx.input.justTouched()) {
+        if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             game.setScreen("GameScreen");
 
         } else {
@@ -56,7 +56,7 @@ public class MenuScreen extends Screen {
             game.camera.update();
             game.batch.begin();
             title.setColor(Color.GREEN);
-            title.draw(game.batch, "Frogger", 300, 300);
+            title.draw(game.batch, "Frogger\n\nPress Enter or Click to Play", 300, 300);
             game.batch.end();
             i++;
             elapsedTime += dt;
