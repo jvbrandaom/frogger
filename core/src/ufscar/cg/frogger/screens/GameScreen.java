@@ -40,6 +40,7 @@ public class GameScreen extends Screen {
         lives = new BitmapFont();
         gameStatus = new BitmapFont();
         gameStatus.setColor(Color.RED);
+        gameStatus.getData().setScale(1.5f,1.5f);
         score.setColor(Color.WHITE);
         lives.setColor(Color.WHITE);
         initializeVehicles(4, 100, GameData.LEFT, 5, "car1");
@@ -165,7 +166,7 @@ public class GameScreen extends Screen {
         score.draw(game.batch, "LIVES: " + player.getLives(), 120, 470);
 
         if (game.currentState == game.GAME_STATE_PAUSE) {
-            gameStatus.draw(game.batch, gameStatusMessage, 240, 320);
+            gameStatus.draw(game.batch, gameStatusMessage, 210, 280);
         }
 
         game.batch.end();

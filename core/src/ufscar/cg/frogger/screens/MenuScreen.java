@@ -51,7 +51,7 @@ public class MenuScreen extends Screen {
             game.camera.update();
             game.batch.begin();
             title.setColor(Color.GREEN);
-            title.draw(game.batch, "Frogger\n\nPress Enter or Click to Play", 300, 300);
+            title.draw(game.batch, "Frogger\n\nPress Enter or Click to Play", 240, 280);
             game.batch.end();
             i++;
             elapsedTime += dt;
