@@ -23,6 +23,8 @@ public class GameScreen extends Screen {
     private BitmapFont lives;
     private BitmapFont gameStatus;
     private String gameStatusMessage;
+    Sprite msgGameOver;
+    Sprite msgWin;
     float elapsedTime = 0f;
     float totalElapsedTime = 0f;
 
@@ -42,7 +44,6 @@ public class GameScreen extends Screen {
         lives = new BitmapFont();
         gameStatusMessage = "";
         gameStatus = new BitmapFont();
-        gameStatus.setColor(Color.RED);
         gameStatus.getData().setScale(1.5f,1.5f);
         score.setColor(Color.WHITE);
         lives.setColor(Color.WHITE);
@@ -51,6 +52,8 @@ public class GameScreen extends Screen {
         if (elements.size() == 0) {
             elements.add(new Sprite(ImageCache.getTexture("background_640")));
         }
+
+
 
         Array<Sprite> alligatorSprites = new Array<Sprite>();
         alligatorSprites.add(new Sprite(ImageCache.getTexture("alligator1")));
@@ -77,6 +80,18 @@ public class GameScreen extends Screen {
         initializeVehicles(5, 60, GameData.RIGHT, 4, "car2");
         initializeVehicles(4, 70, GameData.LEFT, 3, "car1");
         initializeVehicles(4, 40, GameData.RIGHT, 2, "truck");
+
+        msgGameOver = new Sprite(ImageCache.getTexture("msg_gameover"));
+        msgGameOver.setX(230);
+        msgGameOver.setY(240);
+        msgGameOver.setAlpha(0f);
+        elements.add(msgGameOver);
+
+        msgWin = new Sprite(ImageCache.getTexture("msg_win"));
+        msgWin.setX(230);
+        msgWin.setY(240);
+        msgWin.setAlpha(0f);
+        elements.add(msgWin);
     }
 
     // initialize methods for vehicles and logs
@@ -164,6 +179,8 @@ public class GameScreen extends Screen {
         // if the game is paused (after a gameover or a win) check for the Enter key
         else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             player.reset();
+            msgGameOver.setAlpha(0f);
+            msgWin.setAlpha(0f);
             game.currentState = game.GAME_STATE_PLAY;
             game.gameData.score = 0;
         }
@@ -207,7 +224,7 @@ public class GameScreen extends Screen {
 
         // draw score message if the game is paused
         if (game.currentState == game.GAME_STATE_PAUSE) {
-            gameStatus.draw(game.batch, gameStatusMessage, 210, 280);
+            gameStatus.draw(game.batch, gameStatusMessage, 200, 240);
         }
         game.batch.end();
     }
@@ -247,12 +264,16 @@ public class GameScreen extends Screen {
         // will be true when checkWin() is true
         if(n == 0){
             game.gameData.score += game.gameData.POINTS_PER_LIFE * player.getLives();
-            gameStatusMessage = "You Won!\nYour Score was: " + game.gameData.score + "\nPress ENTER to play again";
+            msgWin.setAlpha(1f);
+            gameStatus.setColor(Color.YELLOW);
+            gameStatusMessage = "      Your Score was: " + game.gameData.score + "\nPress ENTER to play again";
             game.currentState = game.GAME_STATE_PAUSE;
         }
         // decreases number of lives, game is over if it's below zero
         else if(player.decLives() < 0) {
-            gameStatusMessage = "YOU DIED!\nYour score was: " + game.gameData.score + "\nPress ENTER to play again";
+            msgGameOver.setAlpha(1f);
+            gameStatus.setColor(Color.RED);
+            gameStatusMessage = "      Your score was: " + game.gameData.score + "\nPress ENTER to play again";
             game.currentState = Frogger.GAME_STATE_PAUSE;
         }
         // player has not won or lost, so the position is reset

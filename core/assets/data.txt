@@ -1,5 +1,5 @@
 texture.png
-size: 640, 512
+size: 640, 576
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -19,7 +19,7 @@ alligator2
   index: -1
 background_640
   rotate: false
-  xy: 0, 32
+  xy: 0, 96
   size: 640, 480
   orig: 640, 480
   offset: 0, 0
@@ -40,16 +40,30 @@ car2
   index: -1
 frog
   rotate: false
-  xy: 96, 0
+  xy: 32, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 frog_jump
   rotate: false
-  xy: 32, 0
+  xy: 96, 0
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+msg_gameover
+  rotate: false
+  xy: 0, 32
+  size: 192, 64
+  orig: 192, 64
+  offset: 0, 0
+  index: -1
+msg_win
+  rotate: false
+  xy: 192, 32
+  size: 192, 64
+  orig: 192, 64
   offset: 0, 0
   index: -1
 truck
