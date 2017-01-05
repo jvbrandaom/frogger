@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.utils.Array;
 import ufscar.cg.frogger.Frogger;
 import ufscar.cg.frogger.data.GameData;
 import ufscar.cg.frogger.data.ImageCache;
@@ -20,9 +22,14 @@ public class GameScreen extends Screen {
     private BitmapFont score;
     private BitmapFont lives;
     private BitmapFont gameStatus;
+    private String gameStatusMessage;
     float elapsedTime = 0f;
+    float totalElapsedTime = 0f;
+
     List<Integer> waterTiers = new ArrayList(Arrays.asList(7, 8, 9, 10, 11, 12));
-    private String gameStatusMessage = "";
+    Alligator alligator;
+    Sprite alligatorKeyFrame;
+    private Animation<Sprite> alligatorAnimation;
 
     public GameScreen(Frogger game) {
         super(game);
@@ -31,33 +38,45 @@ public class GameScreen extends Screen {
 
     @Override
     public void createScreen() {
-        player = new Player(game, 320, 0);
-        if (elements.size() == 0) {
-            elements.add(new Sprite(ImageCache.getTexture("background_640")));
-        }
-
         score = new BitmapFont();
         lives = new BitmapFont();
+        gameStatusMessage = "";
         gameStatus = new BitmapFont();
         gameStatus.setColor(Color.RED);
         gameStatus.getData().setScale(1.5f,1.5f);
         score.setColor(Color.WHITE);
         lives.setColor(Color.WHITE);
 
+        player = new Player(game, 320, 0);
+        if (elements.size() == 0) {
+            elements.add(new Sprite(ImageCache.getTexture("background_640")));
+        }
+
+        Array<Sprite> alligatorSprites = new Array<Sprite>();
+        alligatorSprites.add(new Sprite(ImageCache.getTexture("alligator1")));
+        alligatorSprites.add(new Sprite(ImageCache.getTexture("alligator2")));
+        alligatorAnimation = new Animation<Sprite>(0.2f, alligatorSprites);
+
+        // alligator on final tier 13
+        alligator = new Alligator(game, game.screenWidth/2, 13*GameData.TILE_SIZE);
+        alligator.setAlpha(0f);
+        alligator.speed = 70;
+
+        // logs initialized for the water tiers
+        //7-12
+        initializeLogs(3, 50, GameData.RIGHT, 12, "wood2");
+        initializeLogs(2, 40, GameData.LEFT, 11, "wood3");
+        initializeLogs(3, 70, GameData.RIGHT, 10, "wood2");
+        initializeLogs(2, 60, GameData.LEFT, 9, "wood4");
+        initializeLogs(3, 50, GameData.RIGHT, 8, "wood3");
+        initializeLogs(3, 60, GameData.LEFT, 7, "wood2");
+
         // vehicles initialized for the street tiers
+        // tier 2-5
         initializeVehicles(4, 100, GameData.LEFT, 5, "car1");
         initializeVehicles(5, 60, GameData.RIGHT, 4, "car2");
         initializeVehicles(4, 70, GameData.LEFT, 3, "car1");
         initializeVehicles(4, 40, GameData.RIGHT, 2, "truck");
-
-        // logs initialized for the water tiers
-        //7-12
-        initializeLogs(3, 60, GameData.LEFT, 7, "wood2");
-        initializeLogs(3, 50, GameData.RIGHT, 8, "wood3");
-        initializeLogs(2, 60, GameData.LEFT, 9, "wood4");
-        initializeLogs(3, 70, GameData.RIGHT, 10, "wood2");
-        initializeLogs(2, 40, GameData.LEFT, 11, "wood3");
-        initializeLogs(3, 50, GameData.RIGHT, 12, "wood2");
     }
 
     // initialize methods for vehicles and logs
@@ -98,6 +117,8 @@ public class GameScreen extends Screen {
         gl.glClearColor(0, 0, 0, 1);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        totalElapsedTime+=dt;
+
         // if the game is not paused, ie, is running, check for inputs
         if (game.currentState != game.GAME_STATE_PAUSE) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
@@ -119,11 +140,12 @@ public class GameScreen extends Screen {
                     ((MovingSprite) element).update(dt);
                 }
             }
-
+            alligatorKeyFrame = alligatorAnimation.getKeyFrame(totalElapsedTime, true);
+            alligatorKeyFrame.setPosition(alligator.getX(), alligator.getY());
 
             Boolean collision;
             collision = checkCollision(dt);
-            // if there is a collision out of the water, it's a vehicle and not a log, so it's gameover
+            // if there is a collision out of the water, it's a vehicle or an alligator, so it's gameover
             if(collision){
                 if(!waterTiers.contains(player.tierIndex))
                     gameOver(1);
@@ -156,6 +178,8 @@ public class GameScreen extends Screen {
             element.draw(game.batch);
         }
 
+        alligatorKeyFrame.draw(game.batch);
+
         // handle player movements with or without animation
         if (player.isMoving) {
             Sprite keyFrame = player.frogUp.getKeyFrame(elapsedTime, false);
@@ -185,7 +209,6 @@ public class GameScreen extends Screen {
         if (game.currentState == game.GAME_STATE_PAUSE) {
             gameStatus.draw(game.batch, gameStatusMessage, 210, 280);
         }
-
         game.batch.end();
     }
 
@@ -209,6 +232,9 @@ public class GameScreen extends Screen {
                     // player should move with the tree log
                     player.speed = element.speed;
                     player.update(dt);
+                    return true;
+                }
+                if (element instanceof Alligator) {
                     return true;
                 }
             }
