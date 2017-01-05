@@ -6,16 +6,14 @@ import ufscar.cg.frogger.data.ImageCache;
 
 public class Alligator extends MovingSprite {
 
-    TextureRegion region = ImageCache.getTexture("alligator1");
-
     public Alligator(Frogger game, float x, float y) {
         super(game, x, y);
         this.game = game;
-        setAlligator();
+        setAlligator(ImageCache.getTexture("alligator1"));
         game.screen.elements.add(this);
     }
 
-    private void setAlligator() {
+    private void setAlligator(TextureRegion region) {
         setRegion(region);
         setColor(1, 1, 1, 1);
         setSize(region.getRegionWidth(), region.getRegionHeight());

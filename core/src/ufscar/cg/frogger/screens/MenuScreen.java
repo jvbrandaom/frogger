@@ -40,7 +40,6 @@ public class MenuScreen extends Screen {
     @Override
     public void update(float dt) {
 
-
         // check for a click or the Enter key being pressed to start the game
         if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             game.setScreen("GameScreen");
@@ -50,23 +49,21 @@ public class MenuScreen extends Screen {
             gl.glClearColor(1, 1, 1, 1);
             gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-            // exhibit message and animate frog
+            // exhibit message
             game.camera.update();
             game.batch.begin();
             title.setColor(Color.GREEN);
             title.draw(game.batch, "Frogger\n\nPress Enter or Click to Play", 240, 280);
-            game.batch.end();
+
+            // animate frog
             y++;
             elapsedTime += dt;
             Sprite keyFrame = animation.getKeyFrame(elapsedTime, true);
             keyFrame.setY(y);
             keyFrame.setX(240);
-            game.batch.begin();
             keyFrame.draw(game.batch);
             game.batch.end();
         }
-
     }
-
 }
 
