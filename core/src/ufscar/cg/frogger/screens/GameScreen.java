@@ -54,7 +54,6 @@ public class GameScreen extends Screen {
         }
 
 
-
         Array<Sprite> alligatorSprites = new Array<Sprite>();
         alligatorSprites.add(new Sprite(ImageCache.getTexture("alligator1")));
         alligatorSprites.add(new Sprite(ImageCache.getTexture("alligator2")));
@@ -85,13 +84,11 @@ public class GameScreen extends Screen {
         msgGameOver.setX(230);
         msgGameOver.setY(240);
         msgGameOver.setAlpha(0f);
-        elements.add(msgGameOver);
 
         msgWin = new Sprite(ImageCache.getTexture("msg_win"));
         msgWin.setX(230);
         msgWin.setY(240);
         msgWin.setAlpha(0f);
-        elements.add(msgWin);
     }
 
     // initialize methods for vehicles and logs
@@ -222,10 +219,13 @@ public class GameScreen extends Screen {
         score.draw(game.batch, "SCORE: " + game.gameData.score, 10, 470);
         score.draw(game.batch, "LIVES: " + player.getLives(), 120, 470);
 
-        // draw score message if the game is paused
+        // draw messages and score if the game is paused
         if (game.currentState == game.GAME_STATE_PAUSE) {
+            msgGameOver.draw(game.batch);
+            msgWin.draw(game.batch);
             gameStatus.draw(game.batch, gameStatusMessage, 200, 240);
         }
+
         game.batch.end();
     }
 
