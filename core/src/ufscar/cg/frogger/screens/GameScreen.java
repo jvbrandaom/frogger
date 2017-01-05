@@ -227,7 +227,6 @@ public class GameScreen extends Screen {
         }
         // decreases number of lives, game is over if it's below zero
         else if(player.decLives() < 0) {
-            System.out.println("Game Over");
             gameStatusMessage = "YOU DIED!\nYour score was: " + game.gameData.score + "\nPress ENTER to play again";
             game.currentState = Frogger.GAME_STATE_PAUSE;
         }

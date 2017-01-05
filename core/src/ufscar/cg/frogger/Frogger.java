@@ -58,7 +58,6 @@ public class Frogger extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 
 	// handle change of screens
