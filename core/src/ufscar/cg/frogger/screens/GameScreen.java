@@ -206,7 +206,6 @@ public class GameScreen extends Screen {
                     return true;
                 }
                 if (element instanceof TreeLog) {
-                    System.out.println("I'm on a tree log!");
                     // player should move with the tree log
                     player.speed = element.speed;
                     player.update(dt);

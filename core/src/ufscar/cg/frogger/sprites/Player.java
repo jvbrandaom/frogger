@@ -108,7 +108,7 @@ public class Player extends MovingSprite {
         tierIndex = 0;
         isOnALog = false;
         setPosition(320, 0);
-        if(lives<0){
+        if(lives<0 || game.currentState == game.GAME_STATE_PAUSE){
             lives = 3;
         }
     }
