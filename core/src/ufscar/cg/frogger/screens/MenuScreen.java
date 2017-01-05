@@ -16,7 +16,7 @@ public class MenuScreen extends Screen {
     private BitmapFont title;
     private Animation<Sprite> animation;
     private float elapsedTime = 0f;
-    int i = 0;
+    int y = 0;          // y used as an iterator to set the vertical position of the frog
 
     public MenuScreen (Frogger game) {
         super(game);
@@ -28,10 +28,10 @@ public class MenuScreen extends Screen {
 
         if (elements.size() == 0) {
             Array<Sprite> sprites = new Array<Sprite>();
-            Sprite sprite2 = new Sprite(ImageCache.getTexture("frog"));
-            Sprite sprite3 = new Sprite(ImageCache.getTexture("frog_jump"));
+            Sprite sprite1 = new Sprite(ImageCache.getTexture("frog"));
+            Sprite sprite2 = new Sprite(ImageCache.getTexture("frog_jump"));
+            sprites.add(sprite1);
             sprites.add(sprite2);
-            sprites.add(sprite3);
             animation = new Animation<Sprite>(0.5f, sprites);
         }
     }
@@ -42,8 +42,8 @@ public class MenuScreen extends Screen {
 
         if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             game.setScreen("GameScreen");
-
-        } else {
+        }
+        else {
             GL20 gl = Gdx.gl;
             gl.glClearColor(1, 1, 1, 1);
             gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -53,10 +53,10 @@ public class MenuScreen extends Screen {
             title.setColor(Color.GREEN);
             title.draw(game.batch, "Frogger\n\nPress Enter or Click to Play", 240, 280);
             game.batch.end();
-            i++;
+            y++;
             elapsedTime += dt;
             Sprite keyFrame = animation.getKeyFrame(elapsedTime, true);
-            keyFrame.setY(i);
+            keyFrame.setY(y);
             keyFrame.setX(240);
             game.batch.begin();
             keyFrame.draw(game.batch);

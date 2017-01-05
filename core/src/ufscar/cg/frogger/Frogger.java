@@ -61,9 +61,7 @@ public class Frogger extends ApplicationAdapter {
 	}
 
     public void setScreen (String screenClassName) {
-
         Screen newScreen = null;
-
         if (screens.containsKey(screenClassName) == false) {
             if (screenClassName.equals("GameScreen")) {
                 newScreen = new GameScreen(this);
@@ -84,6 +82,5 @@ public class Frogger extends ApplicationAdapter {
         }
         screen = newScreen;
         screen.createScreen();
-
     }
 }

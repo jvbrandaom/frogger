@@ -45,7 +45,6 @@ public class Player extends MovingSprite {
         setY(getY() + jumpSize);
         isMoving = true;
         tierIndex += 1;
-        //System.out.println(tierIndex);
         game.gameData.score += 10;
     }
 
@@ -57,7 +56,6 @@ public class Player extends MovingSprite {
             setY(getY() - jumpSize);
             isMoving = true;
             tierIndex -= 1;
-            System.out.println(tierIndex);
             game.gameData.score -= 10;
         }
     }
@@ -72,7 +70,6 @@ public class Player extends MovingSprite {
         if(getX()>0) {
             setX(getX() - jumpSize);
             isMoving = true;
-            System.out.println(getX());
             game.gameData.score -= 2;
         }
     }
@@ -87,7 +84,6 @@ public class Player extends MovingSprite {
         if(getX()<(game.screenWidth - getWidth())) {
             setX(getX() + jumpSize);
             isMoving = true;
-            System.out.println(getX());
             game.gameData.score -= 2;
         }
     }
@@ -107,7 +103,6 @@ public class Player extends MovingSprite {
     }
 
     public void reset() {
-        System.out.println(lives);
         tierIndex = 0;
         isOnALog = false;
         setPosition(320, 0);

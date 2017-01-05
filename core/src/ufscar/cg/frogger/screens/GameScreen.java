@@ -115,18 +115,20 @@ public class GameScreen extends Screen {
 
             Boolean collision;
             collision = checkCollision(dt);
-            //If there is no collision in water region, it means that the player is not on a log, thus it's game over
-            //Otherwise, it's a collision with a vehicle, so it's game over
-            if (waterTiers.contains(player.tierIndex) && !collision) {
-                gameOver(1);
-            } else if (!waterTiers.contains(player.tierIndex) && collision) {
-                gameOver(1);
+            if(collision){
+                if(!waterTiers.contains(player.tierIndex))
+                    gameOver(1);
             }
-            else if (checkWin()){
-                gameOver(0);
+            else {
+                if(waterTiers.contains(player.tierIndex)){
+                    gameOver(1);
+                }
+                else if (checkWin()){
+                    gameOver(0);
+                }
             }
-            //if (player.tierIndex == )
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             player.reset();
             game.currentState = game.GAME_STATE_PLAY;
             game.gameData.score = 0;
@@ -185,7 +187,6 @@ public class GameScreen extends Screen {
 
             if (player.getBoundingRectangle().overlaps(element.getBoundingRectangle())) {
                 if (element instanceof Vehicle) {
-                    //gameOver();
                     return true;
                 }
                 if (element instanceof TreeLog) {
