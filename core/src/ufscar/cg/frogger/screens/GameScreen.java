@@ -18,6 +18,7 @@ import java.util.List;
 public class GameScreen extends Screen {
     private Player player;
     private BitmapFont score;
+    private BitmapFont lives;
     private BitmapFont gameStatus;
     float elapsedTime = 0f;
     List<Integer> waterTiers = new ArrayList(Arrays.asList(7, 8, 9, 10, 11, 12));
@@ -36,9 +37,11 @@ public class GameScreen extends Screen {
         }
 
         score = new BitmapFont();
+        lives = new BitmapFont();
         gameStatus = new BitmapFont();
         gameStatus.setColor(Color.RED);
         score.setColor(Color.WHITE);
+        lives.setColor(Color.WHITE);
         initializeVehicles(4, 100, GameData.LEFT, 5, "car1");
         initializeVehicles(5, 60, GameData.RIGHT, 4, "car2");
         initializeVehicles(4, 70, GameData.LEFT, 3, "car1");
@@ -114,11 +117,13 @@ public class GameScreen extends Screen {
             //If there is no collision in water region, it means that the player is not on a log, thus it's game over
             //Otherwise, it's a collision with a vehicle, so it's game over
             if (waterTiers.contains(player.tierIndex) && !collision) {
-                gameOver();
+                gameOver(1);
             } else if (!waterTiers.contains(player.tierIndex) && collision) {
-                gameOver();
+                gameOver(1);
             }
-            checkWin();
+            else if (checkWin()){
+                gameOver(0);
+            }
             //if (player.tierIndex == )
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             player.reset();
@@ -157,19 +162,17 @@ public class GameScreen extends Screen {
             game.gameData.score = 0;
         }
         score.draw(game.batch, "SCORE: " + game.gameData.score, 10, 470);
+        score.draw(game.batch, "LIVES: " + player.getLives(), 120, 470);
 
         if (game.currentState == game.GAME_STATE_PAUSE) {
-            gameStatus.draw(game.batch, gameStatusMessage, 300, 300);
+            gameStatus.draw(game.batch, gameStatusMessage, 240, 320);
         }
 
         game.batch.end();
     }
 
-    private void checkWin() {
-        if (player.tierIndex == 13) {
-            gameStatusMessage = "You Won!\nYour Score was: " + game.gameData.score + "\nPress ENTER to play again";
-            game.currentState = Frogger.GAME_STATE_PAUSE;
-        }
+    private boolean checkWin() {
+        return player.tierIndex == 13;
     }
 
     private Boolean checkCollision(float dt) {
@@ -181,7 +184,7 @@ public class GameScreen extends Screen {
 
             if (player.getBoundingRectangle().overlaps(element.getBoundingRectangle())) {
                 if (element instanceof Vehicle) {
-                    gameOver();
+                    //gameOver();
                     return true;
                 }
                 if (element instanceof TreeLog) {
@@ -195,10 +198,17 @@ public class GameScreen extends Screen {
         return false;
     }
 
-    private void gameOver() {
-        System.out.println("Game Over");
-        gameStatusMessage = "YOU DIED!\nYour score was: " + game.gameData.score + "\nPress ENTER to play again";
-        game.currentState = Frogger.GAME_STATE_PAUSE;
+    private void gameOver(int n) {
+        if(n == 0){
+            gameStatusMessage = "You Won!\nYour Score was: " + game.gameData.score + "\nPress ENTER to play again";
+            game.currentState = game.GAME_STATE_PAUSE;
+        }
+        else if(player.decLives() < 0) {
+            System.out.println("Game Over");
+            gameStatusMessage = "YOU DIED!\nYour score was: " + game.gameData.score + "\nPress ENTER to play again";
+            game.currentState = Frogger.GAME_STATE_PAUSE;
+        }
+        else
+            player.reset();
     }
-
 }

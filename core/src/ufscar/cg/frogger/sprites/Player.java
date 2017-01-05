@@ -9,6 +9,8 @@ import ufscar.cg.frogger.data.ImageCache;
 
 public class Player extends MovingSprite {
     public Animation<Sprite> frogUp;
+
+    private int lives = 3;
     public int jumpSize = 32;
     public boolean isVisible;
     public Boolean isMoving;
@@ -43,7 +45,7 @@ public class Player extends MovingSprite {
         setY(getY() + jumpSize);
         isMoving = true;
         tierIndex += 1;
-        System.out.println(tierIndex);
+        //System.out.println(tierIndex);
         game.gameData.score += 8;
     }
 
@@ -90,13 +92,27 @@ public class Player extends MovingSprite {
         }
     }
 
+    public int decLives() {
+        return lives -= 1;
+    }
+
+    public int getLives() {
+        if(lives>-1)
+            return lives;
+        else return 0;
+    }
+
     public void draw () {
         draw(game.batch);
     }
 
     public void reset() {
+        System.out.println(lives);
         tierIndex = 0;
         isOnALog = false;
         setPosition(320, 0);
+        if(lives<0){
+            lives = 3;
+        }
     }
 }
