@@ -43,10 +43,14 @@ public class GameScreen extends Screen {
         gameStatus.getData().setScale(1.5f,1.5f);
         score.setColor(Color.WHITE);
         lives.setColor(Color.WHITE);
+
+        // vehicles initialized for the street tiers
         initializeVehicles(4, 100, GameData.LEFT, 5, "car1");
         initializeVehicles(5, 60, GameData.RIGHT, 4, "car2");
         initializeVehicles(4, 70, GameData.LEFT, 3, "car1");
         initializeVehicles(4, 40, GameData.RIGHT, 2, "truck");
+
+        // logs initialized for the water tiers
         //7-12
         initializeLogs(3, 60, GameData.LEFT, 7, "wood2");
         initializeLogs(3, 50, GameData.RIGHT, 8, "wood3");
@@ -56,6 +60,8 @@ public class GameScreen extends Screen {
         initializeLogs(3, 50, GameData.RIGHT, 12, "wood2");
     }
 
+    // initialize methods for vehicles and logs
+    // each tier has a determined number of objects, speed, direction and sprite
     private void initializeVehicles(int numberOfVehicles, float speed, int direction, int tierIndex, String textureRegion) {
         for (int i = 0; i < numberOfVehicles; i++) {
             Vehicle vehicle;
@@ -92,6 +98,7 @@ public class GameScreen extends Screen {
         gl.glClearColor(0, 0, 0, 1);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        // if the game is not paused, ie, is running, check for inputs
         if (game.currentState != game.GAME_STATE_PAUSE) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
                 player.moveFrogLeft();
@@ -106,6 +113,7 @@ public class GameScreen extends Screen {
                 player.moveFrogDown();
             }
 
+            // all sprites in movement are updated
             for (Sprite element : elements) {
                 if (element instanceof MovingSprite) {
                     ((MovingSprite) element).update(dt);
@@ -115,19 +123,23 @@ public class GameScreen extends Screen {
 
             Boolean collision;
             collision = checkCollision(dt);
+            // if there is a collision out of the water, it's a vehicle and not a log, so it's gameover
             if(collision){
                 if(!waterTiers.contains(player.tierIndex))
                     gameOver(1);
             }
+            // if there's no collision and the player is on the water, it's game over
             else {
                 if(waterTiers.contains(player.tierIndex)){
                     gameOver(1);
                 }
+                // if he's not on the water, check if he's reached the end
                 else if (checkWin()){
                     gameOver(0);
                 }
             }
         }
+        // if the game is paused (after a gameover or a win) check for the Enter key
         else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             player.reset();
             game.currentState = game.GAME_STATE_PLAY;
@@ -139,10 +151,12 @@ public class GameScreen extends Screen {
         game.batch.enableBlending();
         game.batch.begin();
 
+        // draw all elements
         for (Sprite element : elements) {
             element.draw(game.batch);
         }
 
+        // handle player movements with or without animation
         if (player.isMoving) {
             Sprite keyFrame = player.frogUp.getKeyFrame(elapsedTime, false);
             keyFrame.setPosition(player.getX(), player.getY());
@@ -167,6 +181,7 @@ public class GameScreen extends Screen {
         score.draw(game.batch, "SCORE: " + game.gameData.score, 10, 470);
         score.draw(game.batch, "LIVES: " + player.getLives(), 120, 470);
 
+        // draw score message if the game is paused
         if (game.currentState == game.GAME_STATE_PAUSE) {
             gameStatus.draw(game.batch, gameStatusMessage, 210, 280);
         }
@@ -178,6 +193,7 @@ public class GameScreen extends Screen {
         return player.tierIndex == 13;
     }
 
+    // check collision of player with vehicles or tree logs
     private Boolean checkCollision(float dt) {
         for (Sprite sprite : elements) {
             if (!(sprite instanceof MovingSprite)) {
@@ -191,6 +207,7 @@ public class GameScreen extends Screen {
                 }
                 if (element instanceof TreeLog) {
                     System.out.println("I'm on a tree log!");
+                    // player should move with the tree log
                     player.speed = element.speed;
                     player.update(dt);
                     return true;
@@ -200,17 +217,21 @@ public class GameScreen extends Screen {
         return false;
     }
 
+    // accessed whenever player dies or reaches the end
     private void gameOver(int n) {
+        // will be true when checkWin() is true
         if(n == 0){
             game.gameData.score += game.gameData.POINTS_PER_LIFE * player.getLives();
             gameStatusMessage = "You Won!\nYour Score was: " + game.gameData.score + "\nPress ENTER to play again";
             game.currentState = game.GAME_STATE_PAUSE;
         }
+        // decreases number of lives, game is over if it's below zero
         else if(player.decLives() < 0) {
             System.out.println("Game Over");
             gameStatusMessage = "YOU DIED!\nYour score was: " + game.gameData.score + "\nPress ENTER to play again";
             game.currentState = Frogger.GAME_STATE_PAUSE;
         }
+        // player has not won or lost, so the position is reset
         else
             player.reset();
     }

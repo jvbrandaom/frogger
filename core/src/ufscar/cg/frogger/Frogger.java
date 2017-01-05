@@ -31,6 +31,7 @@ public class Frogger extends ApplicationAdapter {
 		batch = new SpriteBatch();
         super.create();
 
+        // the 2D game needs an orthographic camera
         camera = new OrthographicCamera(640, 480);
         camera.position.set(640 * 0.5f, 480 * 0.5f, 0);
 
@@ -60,6 +61,7 @@ public class Frogger extends ApplicationAdapter {
 		img.dispose();
 	}
 
+	// handle change of screens
     public void setScreen (String screenClassName) {
         Screen newScreen = null;
         if (screens.containsKey(screenClassName) == false) {

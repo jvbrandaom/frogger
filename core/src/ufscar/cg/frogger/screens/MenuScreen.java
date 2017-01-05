@@ -26,6 +26,7 @@ public class MenuScreen extends Screen {
     public void createScreen() {
         title = new BitmapFont();
 
+        // get sprites for frog standing and jumping
         if (elements.size() == 0) {
             Array<Sprite> sprites = new Array<Sprite>();
             Sprite sprite1 = new Sprite(ImageCache.getTexture("frog"));
@@ -40,6 +41,7 @@ public class MenuScreen extends Screen {
     public void update(float dt) {
 
 
+        // check for a click or the Enter key being pressed to start the game
         if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             game.setScreen("GameScreen");
         }
@@ -48,6 +50,7 @@ public class MenuScreen extends Screen {
             gl.glClearColor(1, 1, 1, 1);
             gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+            // exhibit message and animate frog
             game.camera.update();
             game.batch.begin();
             title.setColor(Color.GREEN);

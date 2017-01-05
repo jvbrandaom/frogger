@@ -92,6 +92,7 @@ public class Player extends MovingSprite {
         return lives -= 1;
     }
 
+    // will get number of lives and return 0 in case of negative lives, so the screen won't exhibit a negative number
     public int getLives() {
         if(lives>-1)
             return lives;
@@ -102,6 +103,7 @@ public class Player extends MovingSprite {
         draw(game.batch);
     }
 
+    // reset initial statuses and set player to the initial position
     public void reset() {
         tierIndex = 0;
         isOnALog = false;
