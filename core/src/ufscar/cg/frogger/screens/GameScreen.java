@@ -200,6 +200,7 @@ public class GameScreen extends Screen {
 
     private void gameOver(int n) {
         if(n == 0){
+            game.gameData.score += game.gameData.POINTS_PER_LIFE * player.getLives();
             gameStatusMessage = "You Won!\nYour Score was: " + game.gameData.score + "\nPress ENTER to play again";
             game.currentState = game.GAME_STATE_PAUSE;
         }
