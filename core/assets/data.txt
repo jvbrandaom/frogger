@@ -1,13 +1,20 @@
 texture.png
-size: 640, 544
+size: 640, 512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-alligator
+alligator1
   rotate: false
-  xy: 128, 0
-  size: 32, 32
-  orig: 32, 32
+  xy: 256, 0
+  size: 80, 32
+  orig: 80, 32
+  offset: 0, 0
+  index: -1
+alligator2
+  rotate: false
+  xy: 336, 0
+  size: 80, 32
+  orig: 80, 32
   offset: 0, 0
   index: -1
 background_640
@@ -19,63 +26,56 @@ background_640
   index: 480
 car1
   rotate: false
-  xy: 96, 0
+  xy: 64, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 car2
   rotate: false
-  xy: 32, 0
+  xy: 0, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 frog
   rotate: false
-  xy: 0, 0
+  xy: 96, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 frog_jump
   rotate: false
-  xy: 64, 0
+  xy: 32, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-grass
-  rotate: false
-  xy: 0, 512
-  size: 640, 32
-  orig: 640, 32
-  offset: 0, 0
-  index: -1
 truck
   rotate: false
-  xy: 224, 0
+  xy: 192, 0
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
   index: -1
 wood2
   rotate: false
-  xy: 160, 0
+  xy: 128, 0
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
   index: -1
 wood3
   rotate: false
-  xy: 288, 0
+  xy: 416, 0
   size: 96, 32
   orig: 96, 32
   offset: 0, 0
   index: -1
 wood4
   rotate: false
-  xy: 384, 0
+  xy: 512, 0
   size: 128, 32
   orig: 128, 32
   offset: 0, 0
