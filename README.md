@@ -29,5 +29,6 @@ And here's how you lose points:
 [![Play video](https://raw.githubusercontent.com/jvbrandaom/frogger/master/video_demo/thumbnail.png)](https://youtu.be/Nx_zXtNtSl0 "Play video")
 
 [![libGDX](https://libgdx.badlogicgames.com/img/logo.png)](https://libgdx.badlogicgames.com/)
+
 libGDX is an awesome Open Source cross-platform framework for game development
 You can  learn more about it [here](https://libgdx.badlogicgames.com/documentation.html)
